@@ -30,3 +30,4 @@ Ele foi escrito com comando SQL e para a terceira questão foram criadas as segu
 
     "CREATE VIEW error AS SELECT date(time) as day, count(id) AS views FROM log WHERE status = '404 NOT FOUND' GROUP BY day")
 
+Os resultados gerados são listados no arquivo [RESULTS.txt](https://github.com/denisprado/analise-log/blob/master/RESULTS.txt)
