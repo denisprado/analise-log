@@ -1,6 +1,7 @@
 
 
-## Análise de Logs Nanodegree
+## Análise de Logs
+### Questões
 
 Este projeto é um exercício de análise de logs de acesso a um site de notícias fictício. Através de código SQL ele responde a três perguntas:
 
@@ -13,16 +14,17 @@ Este projeto é um exercício de análise de logs de acesso a um site de notíci
 3. Em quais dias mais de 1% das requisições resultaram em erros?
 
   
-
-Para tanto, utilizei o arquivo project-news.py escrito em Pyhton 2.7.12. ele pode ser executado com o seguinte comando:
+### Arquivos necessários
+Para tanto, utilizei o arquivo project-news.py escrito em Pyhton 2.7.12. Ele pode ser executado com o seguinte comando:
 
   
 
     python project-news.py
 
-  
+O banco de dados utilizado é o news e aqui está seu [arquivo](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip).
 
-Ele foi escrito com comando SQL e para a terceira questão foram criadas as seguintes VIEWS:
+### VIEWS
+O código em Python foi escrito utilizando comandos SQL e para a terceira questão foram criadas as seguintes VIEWS no BD News:
 
   
 
@@ -30,4 +32,5 @@ Ele foi escrito com comando SQL e para a terceira questão foram criadas as segu
 
     "CREATE VIEW error AS SELECT date(time) as day, count(id) AS views FROM log WHERE status = '404 NOT FOUND' GROUP BY day")
 
+### Resultados
 Os resultados gerados são listados no arquivo [RESULTS.txt](https://github.com/denisprado/analise-log/blob/master/RESULTS.txt)

@@ -1,4 +1,5 @@
-#Python 2.7.12
+#!/usr/bin/env python
+# encoding: utf-8
 
 import psycopg2
 import datetime
@@ -6,9 +7,16 @@ import datetime
 conn = psycopg2.connect(dbname="news")
 cursor = conn.cursor()
 
-#Primeira Questão
-cursor.execute(
-    "SELECT articles.title, count(log.path) as n_views from log, articles where log.path = CONCAT('/article/', articles.slug) group by articles.title order by n_views DESC limit 3")
+query1 = '''
+SELECT articles.title, count(log.path) AS n_views
+FROM log, articles
+WHERE log.path = CONCAT('/article/', articles.slug)
+GROUP BY articles.title
+ORDER BY n_views DESC
+LIMIT 3
+'''
+# Primeira Questão
+cursor.execute(query1)
 posts1 = cursor.fetchall()
 print("-------------------------")
 print("First question: ")
@@ -16,10 +24,16 @@ print("-------------------------")
 for record in posts1:
     print('"'+str(record[0])+'" -- '+str(record[1])+' views')
 
-
-#Segunda questão
-cursor.execute(
-    "SELECT authors.name, count(log.path) as n_views from log, articles, authors where log.path = CONCAT('/article/', articles.slug) and articles.author = authors.id group by authors.name order by n_views DESC")
+query2 = '''
+SELECT authors.name, count(log.path) AS n_views
+FROM log, articles, authors
+WHERE log.path = CONCAT('/article/', articles.slug)
+AND articles.author = authors.id
+GROUP BY authors.name
+ORDER BY n_views DESC
+'''
+# Segunda questão
+cursor.execute(query2)
 print(" ")
 print("-------------------------")
 print("Second question: ")
@@ -28,9 +42,16 @@ posts2 = cursor.fetchall()
 for record in posts2:
     print(str(record[0])+' -- '+str(record[1])+' views')
 
-
-#Terceira questão
-cursor.execute('select total.day, ROUND(((CAST(error.views AS DECIMAL) / CAST(total.views AS DECIMAL))*100), 2) as percent FROM error, total where total.day = error.day and (CAST(error.views AS DECIMAL) / CAST(total.views AS DECIMAL))*100 > 1')
+query3 = '''
+SELECT total.day,
+ROUND(((CAST(error.views AS DECIMAL)
+/ CAST(total.views AS DECIMAL))*100), 2)
+AS percent
+FROM error, total
+WHERE total.day = error.day
+AND (CAST(error.views AS DECIMAL) / CAST(total.views AS DECIMAL))*100 > 1'''
+# Terceira questão
+cursor.execute(query3)
 print(" ")
 print("-------------------------")
 print("Third question: ")
